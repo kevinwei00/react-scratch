@@ -2,13 +2,17 @@ const path = require("path");
 const htmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-  entry: "./src/index.js",
+  entry: {
+    app: "./src/index.js"
+  },
   output: {
-    filename: "bundle.js",
-    path: path.resolve(__dirname, "public")
+    filename: "[name].bundle.js", // easier debugging (app.bundle.js)
+    path: path.resolve(__dirname, "build"), // output to local disk directory
+    //publicPath: "/assets/" // public URL of output (localhost:8080/assets/)
   },
   devServer: {
-    contentBase: path.resolve(__dirname, "src")
+    port: 8080,
+    contentBase: path.resolve(__dirname, "src") // serve from project directory for live reload
   },
   module: {
     rules: [
@@ -25,7 +29,7 @@ module.exports = {
   },
   plugins: [
     new htmlWebpackPlugin({
-      template: "./src/index.html"
+      template: "./public/index.html"
     })
   ],
   resolve: {
